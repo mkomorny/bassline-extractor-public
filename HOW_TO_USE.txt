@@ -1,0 +1,50 @@
+HOW TO USE: bassline-extractor
+==============================
+
+PURPOSE
+  Extract clean, solid monophonic MIDI basslines from audio recordings, 808 subs,
+  synth bass loops, and isolated bass stems with strict low-end frequency clamping
+  (28 Hz - 320 Hz) to eliminate drum, guitar, and vocal bleed.
+
+CAPABILITIES
+  - Low-End Frequency Clamping: strict 28 Hz floor to 320 Hz ceiling eliminates snare crack, cymbals, vocals, and guitars
+  - Sub-Bass Sensitivity: low onset threshold (0.45) reliably catches deep 808 fundamentals without octave jumping
+  - Legato Micro-Gap Merging: merges amplitude dips and flutter into solid, continuous sustained notes (80ms merge window)
+  - Strict Monophonic Guarantee: two-pass note sanitizer guarantees zero overlapping notes
+  - Pitch Bend Control: retains slides and glides, or strips bends completely (--no-bends) for rigid quantization
+  - Automatic Virtual Environment Delegation: transparently executes inside the dedicated uv basic-pitch runtime
+
+USE CASES
+  - "Extract the bassline from this audio stem into a clean MIDI track."
+  - "Transcribe the 808 notes and slides from this trap beat loop."
+  - "Pull the electric bassline from this funk recording without cymbal bleed."
+  - "Convert this sub-bass audio file into MIDI for Serum or Ableton Drift."
+
+IDEAS
+  - Pair with stem-separation: isolate the bass stem first, then run bassline-extractor for maximum clarity.
+  - Pair with Ableton Drift or Serum: drop the generated .mid file directly onto a sub-bass or Reese preset.
+  - Tune ceiling for slap bass: pass --max-freq 450.0 to capture aggressive slap harmonics and pop notes.
+  - Use --no-bends for electronic grid music: hard-quantizes pitches to exact semitone grids.
+
+PROMPTS YOU CAN PASTE
+  /bassline-extractor "C:\Music\bass_stem.wav"
+
+  Extract the bassline MIDI from "C:\Samples\808_loop.wav" --no-bends
+
+  Transcribe this bass recording with a 400 Hz ceiling: "D:\Recordings\funk_bass.mp3"
+
+  Extract the sub-bass notes from "C:\Audio\trap_intro.wav" into a clean monophonic MIDI file.
+
+EXAMPLE FLOW
+  You:   /bassline-extractor "C:\Music\808_take.wav"
+  Model: Running low-end frequency-clamped bass extraction...
+         ✅ Bassline Extracted!
+         📁 Source: "C:\Music\808_take.wav"
+         🎹 Output MIDI: "C:\Music\808_take_bass.mid"
+         📊 Notes: 18 monophonic bass notes | Range: C1 (32.7 Hz) to G2 (98.0 Hz)
+
+DEFAULT GOALS IF YOU DON'T NAME ONE
+  1. Enforce 28 Hz - 320 Hz frequency boundaries to eliminate high-frequency spill
+  2. Merge legato micro-gaps to preserve note sustain
+  3. Enforce strict monophony (zero overlapping notes)
+  4. Save output as a clean .mid file in the same directory as the source audio
